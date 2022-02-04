@@ -1,5 +1,6 @@
 const startTimer = () => {
     state.timer = setInterval(() => {
+      state.time = document.getElementsByClassName("time")[0].value
       document.getElementById("myBtn").disabled = true;
       let [minutes, seconds] = state.time.split(':');
       if (state.time === '0:00') {
@@ -24,6 +25,7 @@ const startTimer = () => {
   const render = () => {
 
   const time = document.getElementsByClassName('time')[0];
-  time.textContent = state.time;
+  time.value = state.time;
   }
+
 
