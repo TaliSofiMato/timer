@@ -60,18 +60,23 @@ const beep = (duration, frequency, volume, type, callback) => {
 
 
 
-const storeNote = (event) => {
-  console.log(event.charCode)
+const storeNote = async (event) => {
       if (event.charCode === 13) {
-         event.preventDefault();
-         postToDatabase(event.target.value);
+        event.preventDefault();
+        let newNote = await postToDatabase(event.target.value);
+        renderNote(newNote)
+        let input = document.getElementsByClassName('text')
+        input[0].value = ''
       }
 }
+
 const renderNotes = async () => {
   let notes = await getNotesFromDatabase()
+  notes.forEach(renderNote)
+}
+
+const renderNote = (noteObj) => {
   const postedNotes = document.getElementsByClassName('notes')[0]
-  notes.forEach((noteObj) => {
-    const newNote = `<div class='note'>${noteObj.text}</div>`
-      postedNotes.innerHTML = postedNotes.innerHTML + newNote
-  })
+  const newNote = `<div class='note'>${noteObj.text}</div>`
+  postedNotes.innerHTML = postedNotes.innerHTML + newNote
 }
