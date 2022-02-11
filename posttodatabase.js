@@ -1,4 +1,11 @@
-// const postToDatabase = async (file) => {
-//     const response = await fetch ('')
-//     return await response.json()
-// }
+const postToDatabase = async (input) => {
+    try {
+        const response = await fetch ('https://abx50a09t3.execute-api.us-east-1.amazonaws.com/notes', {
+            method: 'POST',
+            body: JSON.stringify({text:input})
+        });
+        return await response.json()
+    }catch(e){
+        console.log(e)
+    }
+}   

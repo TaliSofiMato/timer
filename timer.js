@@ -1,3 +1,4 @@
+
 let timeStorage = ''
 
 const startTimer = () => {
@@ -57,3 +58,11 @@ const beep = (duration, frequency, volume, type, callback) => {
 };
 
 
+
+const storeNote = (event) => {
+  console.log(event.charCode)
+      if (event.charCode === 13) {
+         event.preventDefault();
+         postToDatabase(event.target.value);
+      }
+}
