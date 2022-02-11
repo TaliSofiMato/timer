@@ -28,9 +28,10 @@ const startTimer = () => {
   }, 1000);
 };
 
-const render = () => {
+const render = async () => {
   const time = document.getElementsByClassName('time')[0];
   time.value = state.time;
+  await renderNotes();
 }
 
 const resetRender = () => {
@@ -65,4 +66,12 @@ const storeNote = (event) => {
          event.preventDefault();
          postToDatabase(event.target.value);
       }
+}
+const renderNotes = async () => {
+  let notes = await getNotesFromDatabase()
+  const postedNotes = document.getElementsByClassName('notes')[0]
+  notes.forEach((noteObj) => {
+    const newNote = `<div class='note'>${noteObj.text}</div>`
+      postedNotes.innerHTML = postedNotes.innerHTML + newNote
+  })
 }
