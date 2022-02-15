@@ -4,12 +4,13 @@ let timeStorage = ''
 const startTimer = () => {
   timeStorage = document.getElementsByClassName("time")[0].value
   state.time = document.getElementsByClassName("time")[0].value
- 
+  document.getElementById("myBtn").disabled = true;
+  document.getElementsByClassName("time")[0].disabled = true;
+  document.getElementsByClassName("time")[0].disabled = true;
+
+  document.getElementsByClassName("completed")[0].disabled = true;
+  document.getElementsByClassName("not-completed")[0].disabled = true;
   state.timer = setInterval(() => {
-    document.getElementById("myBtn").disabled = true;
-    document.getElementsByClassName("time")[0].disabled = true;
-    document.getElementsByClassName("completed")[0].disabled = true;
-    document.getElementsByClassName("not-completed")[0].disabled = true;
     let [minutes, seconds] = state.time.split(':');
     if (state.time === '0:00' || state.time === '00:00') {
       beep(1500, 900);
@@ -67,6 +68,8 @@ const beep = (duration, frequency, volume, type, callback) => {
 
 const storeNote = async (event) => {
       if (event.charCode === 13) {
+        document.getElementsByClassName("text")[0].disabled = true;
+
         event.preventDefault();
         let newNote = await postToDatabase(event.target.value);
         renderNote(newNote)
@@ -84,4 +87,8 @@ const renderNote = (noteObj) => {
   const postedNotes = document.getElementsByClassName('notes')[0]
   const newNote = `<div class='note'>${noteObj.text}</div>`
   postedNotes.innerHTML = postedNotes.innerHTML + newNote
+}
+
+const enableInput = () => {
+  document.getElementsByClassName("text")[0].disabled = false;
 }
