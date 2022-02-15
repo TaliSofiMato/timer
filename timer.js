@@ -86,7 +86,7 @@ const renderNotes = async () => {
 const renderNote = (noteObj) => {
   const postedNotes = document.getElementsByClassName('notes')[0]
   const newNote = `<div class='note'>${noteObj.text}</div>`
-  postedNotes.innerHTML = postedNotes.innerHTML + newNote
+  postedNotes.innerHTML = newNote + postedNotes.innerHTML
 }
 
 const enableInput = () => {
