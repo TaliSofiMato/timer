@@ -4,9 +4,12 @@ let timeStorage = ''
 const startTimer = () => {
   timeStorage = document.getElementsByClassName("time")[0].value
   state.time = document.getElementsByClassName("time")[0].value
+ 
   state.timer = setInterval(() => {
     document.getElementById("myBtn").disabled = true;
     document.getElementsByClassName("time")[0].disabled = true;
+    document.getElementsByClassName("completed")[0].disabled = true;
+    document.getElementsByClassName("not-completed")[0].disabled = true;
     let [minutes, seconds] = state.time.split(':');
     if (state.time === '0:00' || state.time === '00:00') {
       beep(1500, 900);
@@ -36,6 +39,8 @@ const render = async () => {
 
 const resetRender = () => {
   document.getElementById("myBtn").disabled = false;
+  document.getElementsByClassName("completed")[0].disabled = false;
+  document.getElementsByClassName("not-completed")[0].disabled = false;
   const time = document.getElementsByClassName('time')[0];
   time.value = timeStorage;
 }
