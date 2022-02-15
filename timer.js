@@ -1,4 +1,4 @@
-
+let noteInProgess = {}
 let timeStorage = ''
 
 const startTimer = () => {
@@ -35,7 +35,10 @@ const startTimer = () => {
 const render = async () => {
   const time = document.getElementsByClassName('time')[0];
   time.value = state.time;
+  if (!state.loaded) {
   await renderNotes();
+  state.loaded = true;
+  }
 }
 
 const resetRender = () => {
@@ -69,11 +72,11 @@ const beep = (duration, frequency, volume, type, callback) => {
 const storeNote = async (event) => {
       if (event.charCode === 13) {
         document.getElementsByClassName("text")[0].disabled = true;
-
         event.preventDefault();
-        let newNote = await postToDatabase(event.target.value);
+        let newNote = await postToDatabase(event.target.value ? event.target.value : {text: noteInProgess.text});
         renderNote(newNote)
         let input = document.getElementsByClassName('text')
+        noteInProgess = newNote
         input[0].value = ''
       }
 }
@@ -91,4 +94,12 @@ const renderNote = (noteObj) => {
 
 const enableInput = () => {
   document.getElementsByClassName("text")[0].disabled = false;
+  noteInProgess = []
+}
+
+const tryAgain = () => {
+  /// RIGHT NOW THIS IS RENDERING ALL NOTES I THINK .... yes
+  renderNote(noteInProgess)
+  storeNote()
+  startTimer();
 }
